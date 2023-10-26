@@ -1,34 +1,39 @@
 import throttle from "lodash.throttle";
 
 const formEl = document.querySelector('.feedback-form');
+const inputEmail = formEl.elements.email;
+const inputComment = formEl.elements.message;
 const localStorageKey = "feedback-form-state";
 
 const formData = {};
+const dataFromLocalStorage = JSON.parse(localStorage.getItem(localStorageKey));
+
 
 formEl.addEventListener("input", throttle(inputHandler, 500));
 formEl.addEventListener("submit", submitHandler);
 
+if (dataFromLocalStorage) {
+    inputEmail.value = dataFromLocalStorage.email || "";
+    inputComment.value = dataFromLocalStorage.message || "";
+};   
+
 function inputHandler(evt) {
-   
-    formData[evt.target.name] = evt.target.value;    
+    formData.email = inputEmail.value;   
+    formData.message = inputComment.value;
     localStorage.setItem(localStorageKey, JSON.stringify(formData));
 };
    
-const dataFromLocalStorage = JSON.parse(localStorage.getItem(localStorageKey));
-
-addTextFromLS();
-
-function addTextFromLS() {
-        if (dataFromLocalStorage) {
-        formEl.elements.email.value = dataFromLocalStorage.email;
-        formEl.elements.message.value = dataFromLocalStorage.message;
-    }
-};
 
 function submitHandler(evt) {
+
     evt.preventDefault();
+
+    if (formEl.elements.email.value === '' || formEl.elements.message.value === "") {
+        alert("Будь ласка, заповніть усі поля");
+        return;
+    };
+    
     console.log(dataFromLocalStorage);
     localStorage.removeItem(localStorageKey);
     formEl.reset();
 };
-  
