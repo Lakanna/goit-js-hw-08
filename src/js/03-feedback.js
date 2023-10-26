@@ -28,11 +28,11 @@ function submitHandler(evt) {
 
     evt.preventDefault();
 
-    if (formEl.elements.email.value === '' || formEl.elements.message.value === "") {
+    if (inputEmail.value === '' || inputComment.value === "") {
         alert("Будь ласка, заповніть усі поля");
         return;
     };
-    
+
     console.log(dataFromLocalStorage);
     localStorage.removeItem(localStorageKey);
     formEl.reset();
