@@ -13,8 +13,8 @@ formEl.addEventListener("input", throttle(inputHandler, 500));
 formEl.addEventListener("submit", submitHandler);
 
 if (dataFromLocalStorage) {
-    inputEmail.value = dataFromLocalStorage.email || "";
-    inputComment.value = dataFromLocalStorage.message || "";
+    inputEmail.value = dataFromLocalStorage.email;
+    inputComment.value = dataFromLocalStorage.message;
 };   
 
 function inputHandler(evt) {
@@ -33,7 +33,7 @@ function submitHandler(evt) {
         return;
     };
 
-    console.log(dataFromLocalStorage);
+    console.log(formData);
     localStorage.removeItem(localStorageKey);
     formEl.reset();
 };
